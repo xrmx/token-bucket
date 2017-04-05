@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
+import monotonic_cffi as monotonic
 
 from .storage_base import StorageBase
 
@@ -96,7 +96,7 @@ class MemoryStorage(StorageBase):
 
             tokens_in_bucket, last_replenished_at = self._buckets[key]
 
-            now = time.time()
+            now = monotonic.monotonic()
 
             # NOTE(kgriffs): This will detect many, but not all,
             #   manifestations of the race condition. If a later
@@ -123,7 +123,7 @@ class MemoryStorage(StorageBase):
             ]
 
         except KeyError:
-            self._buckets[key] = [capacity, time.time()]
+            self._buckets[key] = [capacity, monotonic.monotonic()]
 
     def consume(self, key, num_tokens):
         """Attempt to take one or more tokens from a bucket.

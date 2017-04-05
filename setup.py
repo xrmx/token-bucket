@@ -38,7 +38,7 @@ setup(
     url='https://github.com/falconry/token-bucket',
     license='Apache 2.0',
     packages=find_packages(exclude=['tests']),
-    install_requires=[],
+    install_requires=['monotonic_cffi'],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
 )
